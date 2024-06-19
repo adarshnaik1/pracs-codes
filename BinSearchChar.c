@@ -2,7 +2,7 @@
 #include<stdlib.h>
 int n;
 
-int BinSearch(int *arr, int i, int l, int x)
+int BinSearch(char *arr, int i, int l, char x)
 {
     //i--> start index, l--> end index, x--> element to be searched
     if(i==l) // small problem (array of only 1 element)
@@ -25,17 +25,17 @@ int main()
 {while(1)
 {
     int solution;
-    int element;
+    char element;
    printf("Enter the number of terms :- ");
    scanf("%d",&n);
-   int *arr=(int *)malloc(n*sizeof(int));
+   char *arr=(char *)malloc(n*sizeof(char));
    // get array input
    printf("Enter the terms of the array :- ");
    for(int i=0;i<n;i++)
-   scanf("%d",&arr[i]);
+   scanf(" %c",&arr[i]);
 
    printf("Enter the element to be searched :- ");
-   scanf("%d",&element);
+   scanf(" %c",&element);
 
 
    solution=BinSearch(arr,0,n-1,element);
