@@ -32,10 +32,10 @@ int main()
    // get array input
    printf("Enter the terms of the array :- ");
    for(int i=0;i<n;i++)
-   scanf(" %c",&arr[i]);
+   scanf(" %c",&arr[i]);// blank space before %c to avoid scanning newline
 
    printf("Enter the element to be searched :- ");
-   scanf(" %c",&element);
+   scanf(" %c",&element);// blank space before %c to avoid scanning newline
 
 
    solution=BinSearch(arr,0,n-1,element);
