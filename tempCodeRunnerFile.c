@@ -1,0 +1,1 @@
+   // Call merge sort function
