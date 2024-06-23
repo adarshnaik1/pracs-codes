@@ -1,14 +1,8 @@
-
-//NOTE- The graph for a single source shortest path problem is a directed graph
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
 #define INFINITY 999
 int n;
-
-bool *S;
-
 void Initialize(int **cost)
 {
     for(int i=1;i<=n;i++)
@@ -19,46 +13,56 @@ void Initialize(int **cost)
         }
     }
 }
-
-void SingleSource(int **cost, int *dist, int v )// n is global hence not passed as a parameter
+bool has_incoming(int u, int **cost)
 {
-
-   for(int i=1;i<=n;i++)
-   {
-    S[i]=false; dist[i]=cost[v][i];
-
-   }
-  S[v]=true; dist[v]=0;
-  // for remaining vertices assign permanent label so remaining are from 2 to n
-  for(int num=2; num<=n;num++)
-  {
-    //Find a vertex u such that the distance u is minimum and s[u]= false
-    //int min=999;
-    int u=-1;
+    // check if the vertice u has any incoming edge
     for(int i=1;i<=n;i++)
     {
-        if(!S[i] &&(u==-1 ||dist[i]<dist[u]))
-        {
-            //min=dist[i];
-            u=i;
-        }
+        if(cost[i][u]!=INFINITY) return true;
     }
-     S[u]=true;
-    // for every vertex w adjacent to u 
-    for(int w=1;w<=n;w++)
+    return false;
+}
+void SingleSource(int v, int **cost, int *dist)
+{
+  for(int i=1 ;i<=n;i++)
+  {
+    dist[i]=cost[v][i];
+  }
+  for(int m=2;m<=n-1;m++)// n-1 relaxations
+  {
+    // find a vertex u such that u has atleast 1 incoming edge and u!=v
+    for(int u=1;u<=n;u++)
     {
-        if((!S[w])&&(cost[u][w]!=INFINITY))
+        if(u==v)continue;
+        if(has_incoming(u,cost))
         {
-            if((dist[w]>dist[u]+cost[u][w]))
-            dist[w]=dist[u]+cost[u][w];
+            // for every edge <i,u> in the graph check if dist[u]>dist[i]+cost[i][u]
+            for(int i=1;i<=n;i++)
+            {
+                if(cost[i][u]!=INFINITY)
+                {
+                    if(dist[u]>dist[i]+cost[i][u])
+                    {
+                        dist[u]=dist[i]+cost[i][u];
+                    }
+                }
+
+            }
         }
+
+        
     }
   }
-        
 
 }
 
-
+//Note - You can check for negative weight cycle after the completion of the function Single source / at the end of the function
+// simply run 2 for loops (nested)--> for each vertice u try comparing its distance [dist array value] with all the adjacent vertices i + cost[i,u]
+// for(int u=1;u<=n;u++)
+//for(int i=1;i<=n;i++)
+/*
+if(dist[u]>dist[i]+cost[i,u])-->PRINT(negative weight cycle detected)
+*/
 int main()
 {
      printf("Enter the number of vertices :- ");
@@ -68,12 +72,8 @@ int main()
     for(int i=0;i<=n;i++)
     {
         cost[i]=(int *)malloc((n+1)*sizeof(int));
-    }
-
+    } 
     int *dist=(int *)malloc((n+1)*sizeof(int));
-    S=(bool *)malloc((n+1)*sizeof(bool));
-    // INPUT OF COST MATRIX
-
     int maxedges=n*(n-1);
     int origin,destin,tempcost;
     Initialize(cost);
@@ -113,39 +113,13 @@ int main()
         printf("\n");
       
     }
-
-    SingleSource(cost, dist, 1);
+    
+    SingleSource(1,cost,dist);
+    dist[1]=0;
     printf("Displaying the shortest path array :- \n");
     for(int i=1;i<=n;i++)
     {
         printf("vertex 1 to %d--> distance= %d \n",i, dist[i]);
     }
 
-   
-    
-
-
 }
-/*
-1 2 40
-1 3 50
-1 5 10
-2 4 15
-2 5 5
-3 2 10
-3 4 5
-3 6 5
-4 7 2
-4 6 2
-5 4 3
-5 6 3
-6 7 4
-6 8 3
-7 2 10
-7 5 8
-8 7 2
-8 4 2
-8 5 3
-5 3 15
--1 -1 -1
-*/
