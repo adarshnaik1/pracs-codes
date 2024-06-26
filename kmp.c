@@ -78,3 +78,7 @@ int main()
   printf("Pattern found at index %d", index);
 
 }
+
+//notes- always remember to take char array for texts and patterns
+//note- always assign strlen to n and m before calling the function
+//note- always check for garbage values if they exist amd get rid of garbage values
