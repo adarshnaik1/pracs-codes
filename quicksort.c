@@ -38,7 +38,7 @@ void QuickSort(int p, int q)
     {
         // small P
      printf("test 1");
-        int j= Partition(arr,p,q); // always pass q+1 and set the q+1 element as infinity before passing in the array
+        int j= Partition(arr,p,q+1); // always pass q+1 and set the q+1 element as infinity before passing in the array
         
         QuickSort(p,j-1);
       

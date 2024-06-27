@@ -41,7 +41,7 @@ SumofSub(s+w[k],k+1,r-w[k]);
 
 }
 //Generate the right subchild
-if((s+r-w[k])&&(s+w[k+1]<=m))
+if((s+r-w[k]>=m)&&(s+w[k+1]<=m))
 {
 x[k]=0;
 SumofSub(s,k+1,r-w[k]);
@@ -49,7 +49,6 @@ SumofSub(s,k+1,r-w[k]);
 }
      
 }
-
 
 int main()
 {

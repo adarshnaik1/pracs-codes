@@ -45,9 +45,9 @@ void lcs(char x[], char y[]) {
         l[0][j] = 0;
     }
 
-    for (int i = 1; i <= n; i++) {
+    for (int i = 1; i <=n; i++) {
         for (int j = 1; j <= m; j++) {
-            if (x[i - 1] == y[j - 1]) {
+            if (x[i] == y[j ]) {
                 l[i][j] = l[i - 1][j - 1] + 1;
             } else {
                 l[i][j] = max(l[i - 1][j], l[i][j - 1]);
